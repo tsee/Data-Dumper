@@ -1,6 +1,9 @@
 Dumper\.bs$
 Dumper\.c$
 \.o$
+\.git/
+\.gitignore$
+\b(?:MY)?META\.(?:json|yml)$
 
 # Default section:
 # Avoid version control files.
