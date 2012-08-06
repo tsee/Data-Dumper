@@ -28,6 +28,10 @@ static I32 DD_dump (pTHX_ SV *val, const char *name, STRLEN namelen, SV *retval,
 #define HvNAME_get HvNAME
 #endif
 
+/* Perls 7 through portions of 15 used utf8_to_uvchr() which didn't have a
+ * length parameter.  This wrongly allowed reading beyond the end of buffer
+ * given malformed input */
+
 #if PERL_VERSION <= 6 /* Perl 5.6 and earlier */
 
 # ifdef EBCDIC
@@ -37,20 +41,42 @@ static I32 DD_dump (pTHX_ SV *val, const char *name, STRLEN namelen, SV *retval,
 # endif
 
 UV
-Perl_utf8_to_uvchr(pTHX_ U8 *s, STRLEN *retlen)
+Perl_utf8_to_uvchr_buf(pTHX_ U8 *s, U8 *send, STRLEN *retlen)
 {
-    const UV uv = utf8_to_uv(s, UTF8_MAXLEN, retlen,
+    const UV uv = utf8_to_uv(s, send - s, retlen,
                     ckWARN(WARN_UTF8) ? 0 : UTF8_ALLOW_ANY);
     return UNI_TO_NATIVE(uv);
 }
 
 # if !defined(PERL_IMPLICIT_CONTEXT)
-#  define utf8_to_uvchr	     Perl_utf8_to_uvchr
+#  define utf8_to_uvchr_buf	     Perl_utf8_to_uvchr_buf
 # else
-#  define utf8_to_uvchr(a,b) Perl_utf8_to_uvchr(aTHX_ a,b)
+#  define utf8_to_uvchr_buf(a,b,c) Perl_utf8_to_uvchr_buf(aTHX_ a,b,c)
 # endif
 
 #endif /* PERL_VERSION <= 6 */
+
+/* Perl 5.7 through part of 5.15 */
+#if PERL_VERSION > 6 && PERL_VERSION <= 15 && ! defined(utf8_to_uvchr_buf)
+
+UV
+Perl_utf8_to_uvchr_buf(pTHX_ U8 *s, U8 *send, STRLEN *retlen)
+{
+    /* We have to discard <send> for these versions; hence can read off the
+     * end of the buffer if there is a malformation that indicates the
+     * character is longer than the space available */
+
+    const UV uv = utf8_to_uvchr(s, retlen);
+    return UNI_TO_NATIVE(uv);
+}
+
+# if !defined(PERL_IMPLICIT_CONTEXT)
+#  define utf8_to_uvchr_buf	     Perl_utf8_to_uvchr_buf
+# else
+#  define utf8_to_uvchr_buf(a,b,c) Perl_utf8_to_uvchr_buf(aTHX_ a,b,c)
+# endif
+
+#endif /* PERL_VERSION > 6 && <= 15 */
 
 /* Changes in 5.7 series mean that now IOK is only set if scalar is
    precisely integer but in 5.6 and earlier we need to do a more
@@ -147,7 +173,7 @@ esc_q_utf8(pTHX_ SV* sv, register const char *src, register STRLEN slen)
 
     /* this will need EBCDICification */
     for (s = src; s < send; s += increment) {
-        const UV k = utf8_to_uvchr((U8*)s, NULL);
+        const UV k = utf8_to_uvchr_buf((U8*)s, (U8*) send, NULL);
 
         /* check for invalid utf8 */
         increment = (k == 0 && *s != '\0') ? 1 : UTF8SKIP(s);
@@ -184,7 +210,7 @@ esc_q_utf8(pTHX_ SV* sv, register const char *src, register STRLEN slen)
         *r++ = '"';
 
         for (s = src; s < send; s += UTF8SKIP(s)) {
-            const UV k = utf8_to_uvchr((U8*)s, NULL);
+            const UV k = utf8_to_uvchr_buf((U8*)s, (U8*) send, NULL);
 
             if (k == '"' || k == '\\' || k == '$' || k == '@') {
                 *r++ = '\\';
