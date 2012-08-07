@@ -11,5 +11,6 @@ t/freezer.t
 t/overload.t
 t/pair.t
 t/perl-74170.t
+t/qr.t
 t/terse.t
 Todo
