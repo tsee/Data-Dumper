@@ -6,6 +6,10 @@ Changes - public release history for Data::Dumper
 
 =over 8
 
+=item PENDING...
+
+Properly list BUILD_REQUIRES prereqs (P5-RT#116028)
+
 =item 2.136 (Oct 04 2012)
 
 Promote to stable release.
