@@ -11,12 +11,15 @@ WriteMakefile(
     MAN3PODS         => {},
     DEFINE           => '-DUSE_PPPORT_H',
     INSTALLDIRS      => 'perl',
+    BUILD_REQUIRES   => {
+        Test::More => '0.60',
+    },
     META_MERGE => {
+        dynamic_config => 0,
         resources => {
-            repository  => 'git://perl5.git.perl.org/perl.git perl-git',
+            repository  => 'https://github.com/tsee/Data-Dumper.git',
             bugtracker  => 'http://rt.perl.org/perlbug/',
             MailingList => 'http://lists.cpan.org/showlist.cgi?name=perl5-porters'
         },
     }
 );
-
