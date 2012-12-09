@@ -11,3 +11,5 @@ MYMETA.*
 META.*
 Dumper.c
 Dumper.bs
+Data-Dumper-*/
+Data-Dumper-*.tar.*
