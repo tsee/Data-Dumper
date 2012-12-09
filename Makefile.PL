@@ -15,6 +15,7 @@ WriteMakefile(
         Test::More => '0.60',
     },
     META_MERGE => {
+        dynamic_config => 0,
         resources => {
             repository  => 'git://perl5.git.perl.org/perl.git perl-git',
             bugtracker  => 'http://rt.perl.org/perlbug/',
