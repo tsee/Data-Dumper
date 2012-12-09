@@ -12,6 +12,8 @@ Properly list BUILD_REQUIRES prereqs (P5-RT#116028)
 
 Supply an explicit dynamic_config => 0 in META
 
+Update repository URL in META
+
 =item 2.136 (Oct 04 2012)
 
 Promote to stable release.

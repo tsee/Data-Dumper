@@ -17,7 +17,7 @@ WriteMakefile(
     META_MERGE => {
         dynamic_config => 0,
         resources => {
-            repository  => 'git://perl5.git.perl.org/perl.git perl-git',
+            repository  => 'https://github.com/tsee/Data-Dumper.git',
             bugtracker  => 'http://rt.perl.org/perlbug/',
             MailingList => 'http://lists.cpan.org/showlist.cgi?name=perl5-porters'
         },
