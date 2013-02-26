@@ -6,6 +6,17 @@ Changes - public release history for Data::Dumper
 
 =over 8
 
+=item 2.142 (Feb 26 2013)
+
+Address vstring related test failures on 5.8: Skip tests for
+obscure case.
+
+Major improvements to test coverage and significant refactoring.
+
+Make Data::Dumper XS ignore Freezer return value. Fixes RT #116364.
+
+Change call of isALNUM to equivalent but more clearly named isWORDCHAR
+
 =item 2.139 (Dec 12 2012)
 
 Supply an explicit dynamic_config => 0 in META
