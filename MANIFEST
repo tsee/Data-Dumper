@@ -3,6 +3,7 @@ Dumper.pm
 Dumper.xs
 Makefile.PL
 MANIFEST			This list of files
+MANIFEST.SKIP
 ppport.h
 t/bless.t
 t/bless_var_method.t
@@ -11,6 +12,7 @@ t/deparse.t
 t/dumper.t
 t/dumpperl.t
 t/freezer.t
+t/freezer_useperl.t
 t/indent.t
 t/lib/Testing.pm
 t/misc.t
