@@ -20,7 +20,7 @@ SKIP: {
 }
 
 sub run_tests_for_bless {
-diag("\$Data::Dumper::Useperl = $Data::Dumper::Useperl");
+note("\$Data::Dumper::Useperl = $Data::Dumper::Useperl");
 
 {
 my $t = bless( {}, q{a'b} );

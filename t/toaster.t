@@ -35,7 +35,7 @@ SKIP: {
 }
 
 sub run_tests_for_toaster {
-    diag("\$Data::Dumper::Useperl = $Data::Dumper::Useperl");
+    note("\$Data::Dumper::Useperl = $Data::Dumper::Useperl");
 
     my ($obj, %dumps, $toaster, $starting);
 

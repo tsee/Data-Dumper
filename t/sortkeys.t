@@ -35,9 +35,9 @@ SKIP: {
 }
 
 sub run_tests_for_sortkeys {
+    note("\$Data::Dumper::Useperl = $Data::Dumper::Useperl");
+
     {
-        diag("\$Data::Dumper::Useperl = $Data::Dumper::Useperl");
-    
         my ($obj, %dumps, $sortkeys, $starting);
     
         note("\$Data::Dumper::Sortkeys and Sortkeys() set to true value");
