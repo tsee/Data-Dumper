@@ -15,13 +15,13 @@ BEGIN {
 use strict;
 
 use Data::Dumper;
-use Test::More tests => 24;
+use Test::More tests => 26;
 use lib qw( ./t/lib );
 use Testing qw( _dumptostr );
 
 run_tests_for_sortkeys();
 SKIP: {
-    skip "XS version was unavailable, so we already ran with pure Perl", 12 
+    skip "XS version was unavailable, so we already ran with pure Perl", 13 
         if $Data::Dumper::Useperl;
     local $Data::Dumper::Useperl = 1;
     run_tests_for_sortkeys();
@@ -160,6 +160,22 @@ sub run_tests_for_sortkeys {
     is(ref($rv), 'ARRAY', "Data::Dumper::_sortkeys returned an array ref");
     is_deeply($rv, [ qw( kappa lambda mu nu omicron ) ],
         "Got keys in Perl default order");
+    {
+        my $warning = '';
+        local $SIG{__WARN__} = sub { $warning = $_[0] };
+    
+        my ($obj, %dumps, $starting);
+    
+        note("\$Data::Dumper::Sortkeys and Sortkeys() set to coderef");
+    
+        $starting = $Data::Dumper::Sortkeys;
+        local $Data::Dumper::Sortkeys = \&badreturnvalue;
+        $obj = Data::Dumper->new( [ \%d ] );
+        $dumps{'ddsksub'} = _dumptostr($obj);
+        like($warning, qr/^Sortkeys subroutine did not return ARRAYREF/,
+            "Got expected warning: sorting routine did not return array ref");
+    }
+
 }
 
 sub reversekeys { return [ reverse sort keys %{+shift} ]; }
@@ -170,3 +186,5 @@ sub reversekeystrim {
     shift(@keys);
     return [ reverse @keys ];
 }
+
+sub badreturnvalue { return { %{+shift} }; }
