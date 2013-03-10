@@ -12,7 +12,7 @@ WriteMakefile(
     DEFINE           => '-DUSE_PPPORT_H',
     INSTALLDIRS      => 'perl',
     BUILD_REQUIRES   => {
-        Test::More => '0.60',
+        Test::More => '0.98',
     },
     META_MERGE => {
         dynamic_config => 0,
