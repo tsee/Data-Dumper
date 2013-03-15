@@ -6,7 +6,7 @@ Changes - public release history for Data::Dumper
 
 =over 8
 
-=item 2.144 (Mar 15 2013)
+=item 2.145 (Mar 15 2013)
 
 Test refactoring and fixing wide and far.
 
