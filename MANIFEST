@@ -23,6 +23,7 @@ t/perl-74170.t
 t/purity_deepcopy_maxdepth.t
 t/qr.t
 t/quotekeys.t
+t/recurse.t
 t/seen.t
 t/sortkeys.t
 t/sparseseen.t
