@@ -13,6 +13,7 @@ t/dumper.t
 t/dumpperl.t
 t/freezer.t
 t/freezer_useperl.t
+t/huge.t
 t/indent.t
 t/lib/Testing.pm
 t/misc.t
@@ -29,5 +30,6 @@ t/sortkeys.t
 t/sparseseen.t
 t/terse.t
 t/toaster.t
+t/trailing_comma.t
 t/values.t
 Todo
