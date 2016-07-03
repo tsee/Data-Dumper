@@ -6,6 +6,16 @@ Changes - public release history for Data::Dumper
 
 =over 8
 
+=item 2.160 (Jul 3 2016)
+
+Now handles huge inputs on 64bit perls.
+
+Add Trailingcomma option. This is as suggested in RT#126813.
+
+Significant refactoring of XS implementation.
+
+Pure Perl implementation fixes in corner cases ("\n" dumped raw").
+
 =item 2.154 (Sep 18 2014)
 
 Most notably, this release fixes CVE-2014-4330:
