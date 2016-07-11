@@ -25,12 +25,22 @@ WriteMakefile(
         $have_test_requires ? () : %test_req,
     },
     $have_test_requires ? (TEST_REQUIRES => \%test_req) : (),
+
     META_MERGE => {
+        'meta-spec' => { version => 2 },
         dynamic_config => 0,
         resources => {
-            repository  => 'git://perl5.git.perl.org/perl.git perl-git',
-            bugtracker  => 'http://rt.perl.org/perlbug/',
-            MailingList => 'http://lists.cpan.org/showlist.cgi?name=perl5-porters'
+            repository  => {
+                url => 'git://perl5.git.perl.org/perl.git',
+                web => 'https://perl5.git.perl.org/perl.git',
+                type => 'git',
+            },
+            bugtracker => {
+                mailto => 'perlbug@perl.org',
+                web => 'https://rt.perl.org',
+            },
+            x_MailingList => 'http://lists.perl.org/list/perl5-porters.html',
+            x_IRC => 'irc://irc.perl.org/#p5p',
         },
     }
 );
