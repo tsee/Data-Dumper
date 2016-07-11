@@ -15,7 +15,12 @@ WriteMakefile(
     },
     MAN3PODS         => {},
     DEFINE           => '-DUSE_PPPORT_H',
-    INSTALLDIRS      => 'perl',
+
+    # 'perl' is reserved for things that shipped with the perl version;
+    # on perls after 5.011000, 'site' has precedence over 'perl', but before
+    # that 'perl' had precedence so we need to keep installing to there.
+    "$]" <= 5.011000 ? ( INSTALLDIRS => 'perl' ) : (),
+
     PREREQ_PM => {
         $have_test_requires ? () : %test_req,
     },
