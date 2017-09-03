@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
 
 my $have_test_requires = ExtUtils::MakeMaker->VERSION ge '6.64';
 my %test_req = (
-    'Test::More' => '0.98',
+    'Test::More' => '0.82',
 );                                                                                                                                                                                             
 WriteMakefile(
     NAME             => "Data::Dumper",
